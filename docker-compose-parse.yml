@@ -1,0 +1,25 @@
+version: "3"
+# You can add Volume Plugin driver here
+volumes:
+  mongo_data:
+    external: true
+
+services:
+  mongo:
+    image: mongo:3.2
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  parse-server:
+    image: aamir010/parser-code
+    environment:
+      PARSE_SERVER_APPLICATION_ID: "MY_APP"
+      PARSE_SERVER_MASTER_KEY: "MY_MASTER"
+      PARSE_SERVER_DATABASE_URI: "mongodb://mongo/parse_db"
+      PARSE_SERVER_FILE_KEY: "FILE_KEY"
+      PARSE_SERVER_JAVASCRIPT_KEY: "JAVASCRIPT_KEY"
+    ports:
+      - "1337:1337"
+    
